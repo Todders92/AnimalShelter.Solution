@@ -13,5 +13,16 @@ namespace AnimalShelter.Controllers
     {
       _db = db; 
     }
+    public ActionResult Index()
+    {
+      List<Animal> model = _db.Animals.ToList();
+      return View(model);
+    }
+
+    public ActionResult Create()
+    {
+      return View();
+    }
+
   }
 }
