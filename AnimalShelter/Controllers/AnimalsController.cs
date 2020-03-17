@@ -13,9 +13,15 @@ namespace AnimalShelter.Controllers
     {
       _db = db; 
     }
+    public ActionResult Details(int id)
+    {
+      Animal thisAnimal = _db.Animals.FirstOrDefault(animals => animals.AnimalId == id);
+      return View(thisAnimal);
+    }
     public ActionResult Index()
     {
       List<Animal> model = _db.Animals.ToList();
+      model.Sort((x,y) => string.Compare(x.Type, y.Type));
       return View(model);
     }
 
@@ -23,13 +29,13 @@ namespace AnimalShelter.Controllers
     {
       return View();
     }
-
+    
     [HttpPost]
     public ActionResult Create (Animal animal)
     {
       _db.Animals.Add(animal);
       _db.SaveChanges();
-      return RedirectoToAction("Index");
+      return RedirectToAction("Index");
     }
   }
 }
